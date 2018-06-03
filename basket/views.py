@@ -6,8 +6,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 
 
-@login_required(login_url='/auth/login')
-def index(request):
+def player_list(request):
     data = {}
 
     # SELECT * FROM player
@@ -28,23 +27,46 @@ def index(request):
     return render(request, template_name, data)
 
 
-def add(request):
+@login_required(login_url='/auth/login')
+def player_add(request):
     data = {}
     if request.method == "POST":
-        data['form'] = PlayerForm(request.POST, request.FILES)
+        if request.POST.get("pk",False):
+            player = Player.objects.get(pk=int(request.POST["pk"]))
+            data['form'] = PlayerForm(request.POST,instance=player)
+        else:
+            data['form'] = PlayerForm(request.POST, request.FILES)
+            if data['form'].is_valid():
+                # aca el formulario valido
+                data['form'].save()
 
-        if data['form'].is_valid():
-            # aca el formulario valido
-            data['form'].save()
-
-            return redirect('player_list')
+                return redirect('player_list')
 
     else:
         data['form'] = PlayerForm()
 
+    data["titulo"] = "Agregar"
     template_name = 'player/add_player.html'
     return render(request, template_name, data)
 
+@login_required(login_url='/auth/login')
+def player_edit(request,pk):
+    data = {}
+    player = Player.objects.get(pk=int(pk))
+    if request.method == "POST":
+        data['form'] = PlayerForm(request.POST, request.FILES, instance=player)
+        if data['form'].is_valid():
+            # aca el formulario valido
+            data['form'].save()
+            return redirect('player_list')
+
+    else:
+        print("Este es el Player ", player)
+        data['form'] = PlayerForm(instance=player)
+
+    data["titulo"] = "Editar"
+    template_name = 'player/add_player.html'
+    return render(request, template_name, data)
 
 def detail(request, player_id):
 
