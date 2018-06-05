@@ -256,8 +256,8 @@ def teamcompose_add(request):
             player = Player.objects.get(pk=int(player))
             teamcompose.players.add(player)
             teamcompose.save()
-        
-        
+        template_name = 'teamcompose/list_teamcompose.html'
+        return render(request, template_name, data)
 
     else:
         players = Player.objects.filter(team=coach.team)

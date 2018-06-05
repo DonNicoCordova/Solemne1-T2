@@ -38,7 +38,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script>
 	$(document).ready(function () {
-		$(".select2").select2();
+		$(".select2").select2({maximumSelectionSize:12, minimumSelectionSize:4});
 		$("#tc_list").addClass("active");
 		
 		$('.datepicker').datepicker({ format: 'dd/mm/yyyy' });
