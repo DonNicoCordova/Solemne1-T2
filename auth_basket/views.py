@@ -21,8 +21,11 @@ def auth_login(request):
             password=password
         )
         if user is not None:
+            print("Entre al user is not none")
             if user.is_active:
+                print("IS ACTIVE")
                 login(request, user)
+                print("Pase el login")
                 return HttpResponseRedirect(reverse('player_list'))
             else:
                 print("usuario o contraseña no validos")

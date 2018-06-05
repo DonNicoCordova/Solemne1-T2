@@ -21,19 +21,36 @@ Lista de Jugadores
 							<th scope="col">Peso</th>
 							<th scope="col">Altura</th>
 							<th scope="col">Equipo</th>
-							<th scope="col">Position</th>
+							<th scope="col">Posicion</th>
+							{% if request.user.is_staff %}
+							<th scope="col">Acciones</th>
+							{% endif %}
 						</tr>
 					</thead>
 					<tbody id="pl_table">
 						{% for player in object_list %}
 						<tr>
-							<td><a data-toggle="modal" data-target="#detallesModal">{{player.name}}</a></td>
+							<td>
+								<div class="row">
+									<div class="col-md-10">
+										{{player.name}} 
+									</div>
+									<div class="col-md-2">
+									</div>
+								</div>
+							</td>
 							<td>@{{player.nickname}}</td>
 							<td>{{player.age}}</td>
 							<td>{{player.weight}}</td>
 							<td>{{player.height}}</td>
 							<td>{{player.team}}</td>
 							<td>{{player.position}}</td>
+							{% if request.user.is_staff %}
+							<td>
+								<a class="btn btn-warning btn-sm" href="{% url 'player_edit' player.pk %}"><i class="fa fa-edit"></i></a>
+								<a class="btn btn-danger btn-sm" href="{% url 'player_delete' player.pk %}"><i class="fa fa-times"></i></a>
+							</td>
+							{% endif %}
 						</tr>
 						{% endfor %}
 		

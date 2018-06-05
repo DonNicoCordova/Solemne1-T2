@@ -7,7 +7,7 @@
 	<div class="collapse navbar-collapse" id="navbarNavDropdown">
 		<ul class="navbar-nav">
 			<li id="home" class="nav-item">
-				<a class="nav-link" href="#">Inicio</a>
+				<a class="nav-link" href="{% url 'index' %}">Inicio</a>
 			</li>
 			<li id="pl_list" class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -26,9 +26,9 @@
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 					{% if request.user.is_staff %}
-					<a class="dropdown-item" href="#">Agregar Equipo</a>
+					<a class="dropdown-item" href="{% url 'team_add' %}">Agregar Equipo</a>
 					{% endif %}
-					<a class="dropdown-item" href="#">Lista de Equipos</a>
+					<a class="dropdown-item" href="{% url 'team_list' %}">Lista de Equipos</a>
 				</div>
 			</li>
 			<li id="en_list" class="nav-item dropdown">
@@ -37,11 +37,33 @@
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 					{% if request.user.is_staff %}
-					<a class="dropdown-item" href="#">Agregar Entrenador</a>
+					<a class="dropdown-item" href="{% url 'coach_add' %}">Agregar Entrenador</a>
 					{% endif %}
-					<a class="dropdown-item" href="#">Lista de Entrenadores</a>
+					<a class="dropdown-item" href="{% url 'coach_list' %}">Lista de Entrenadores</a>
 				</div>
 			</li>
+			<li id="ma_list" class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Encuentros
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+					{% if request.user.is_staff %}
+					<a class="dropdown-item" href="{% url 'match_add' %}">Agregar Encuentro</a>
+					{% endif %}
+					<a class="dropdown-item" href="{% url 'match_list' %}">Lista de Encuentros</a>
+				</div>
+			</li>
+			{% if request.user.coach %}
+				<li id="tc_list" class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Nominas
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="{% url 'teamcompose_add' %}">Agregar Nomina</a>
+						<a class="dropdown-item" href="{% url 'teamcompose_list' %}">Lista de Nomina</a>
+					</div>
+				</li>
+			{% endif %}
 		</ul>
 	</div>
 	{% if request.user.is_authenticated %}

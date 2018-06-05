@@ -1,0 +1,47 @@
+{% extends "base.html"%}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block title %}
+{{titulo}} un Encuentro
+{% endblock title %}
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+{% endblock css %}
+{% block content %}
+	<div class="row">
+		<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2">
+			<h1 class="text-center" style="margin-top:30px;">{{titulo}} Encuentro</h1>
+			<hr>
+			<form action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="date">Fecha</label>
+				<div class="col-md-9">
+					<div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+						<input type="text" name="date" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
+						<div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+							<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% bootstrap_form form layout="horizontal" %}
+
+			<input type="submit" value="Enviar" class="btn btn-primary btn-lg btn-block">
+			</form>
+			<br>
+		</div>
+	</div>
+{% endblock content %}
+{% block javascript %}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+
+	<script>
+		$(document).ready(function(){
+			$("#ma_list").addClass("active");
+			
+			$('#datetimepicker1').datetimepicker({format:"YYYY-MM-DD HH:mm:ss"});
+		});
+	</script>
+{% endblock javascript %}

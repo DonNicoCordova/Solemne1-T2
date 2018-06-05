@@ -11,3 +11,11 @@
 .titulo {
     margin-top: 3%;
 }
+.img-index{
+    height:auto; 
+    max-width:20%;
+}
+.logo-team{
+    height:auto;
+    max-width:70px;
+}

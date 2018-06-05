@@ -1,0 +1,31 @@
+{% extends "base.html"%}
+{% load bootstrap4 %}
+{% load static %}
+{% block title %}
+{{titulo}} un Equipo
+{% endblock title %}
+{% block content %}
+	<div class="row">
+		<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2">
+			<h1 class="text-center" style="margin-top:30px;">{{titulo}} Equipo</h1>
+			<hr>
+			<form action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+
+			{% bootstrap_form form layout="horizontal" %}
+
+			<input type="submit" value="Enviar" class="btn btn-primary btn-lg btn-block">
+			</form>
+			<br>
+		</div>
+	</div>
+{% endblock content %}
+{% block javascript %}
+	<script>
+		$(document).ready(function(){
+			$("#te_list").addClass("active");
+			
+			$('.datepicker').datepicker({format:'dd/mm/yyyy'});
+			
+		});
+	</script>
+{% endblock javascript %}

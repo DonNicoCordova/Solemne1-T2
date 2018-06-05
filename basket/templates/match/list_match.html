@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% block title %}
+Lista de Encuentros
+{% endblock title %}
+{% block content %}
+<div class="row titulo">
+	<h1>Lista de Encuentros</h1>
+	<div class="col-md-12">
+		<div class="row">
+			<div class="col-md-12">
+				<input type="text" id="search" class="form-control" placeholder="Que estas buscando?...">
+				<br>
+			</div>
+			<div class="col-md-12 m-t-1">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">Nombre</th>
+							<th scope="col">Equipo 1</th>
+							<th scope="col">Equipo 2</th>
+							<th scope="col">Fecha</th>
+							{% if request.user.is_staff %}
+							<th scope="col">Acciones</th>
+							{% endif %}
+							
+						</tr>
+					</thead>
+					<tbody id="ma_table">
+						{% for match in object_list %}
+						<tr>
+							<td>{{match.name}}</td>
+							<td>{{match.team1}}</td>
+							<td>{{match.team2}}</td>
+							<td>{{match.date}}</td>
+							{% if request.user.is_staff %}
+							<td>
+								<a class="btn btn-warning btn-sm" href="{% url 'match_edit' match.pk %}"><i class="fa fa-edit"></i></a>
+								<a class="btn btn-danger btn-sm" href="{% url 'match_delete' match.pk %}"><i class="fa fa-times"></i></a>
+							</td>
+							{% endif %}
+						</tr>
+						{% endfor %}
+		
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	{% if object_list.has_next or object_list.has_previous %}
+	<nav aria-label="Page navigation example">
+		<ul class="pagination">
+			{% if object_list.has_previous %}
+			<li class="page-item">
+				<a class="page-link" href="?page={{ object_list.previous_page_number }}">Previous</a>
+			</li>
+			{% endif %} {% for page in object_list.paginator.page_range %}
+			<li class="page-item {% if object_list.number == page %}active{% endif %}">
+				<a class="page-link" href="?page={{ page }}">{{ page }}</a>
+			</li>
+			{% endfor %} {% if object_list.has_next %}
+			<li class="page-item">
+				<a class="page-link" href="?page={{ object_list.next_page_number }}">Next</a>
+			</li>
+			{% endif %}
+		</ul>
+	</nav>
+	{% endif %}
+</div>
+<!-- Button trigger modal -->
+<!-- Modal -->
+{% comment %} <div class="modal fade" id="detallesModal" tabindex="-1" role="dialog" aria-labelledby="DetallesDeJugadores" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Información</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-4">
+						<img class="mb-4 rounded-circle" src="{% static 'index.jpg' %}" alt="" width="50%" height="50%">
+					</div>
+					<div class="col-md-8">
+						<div class="row">
+							<label for="name"></label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div> {% endcomment %}
+{% endblock content %}
+{% block javascript %}
+<script>
+	$(document).ready(function(){
+		$("#ma_list").addClass("active");
+		
+		$("#search").on("keyup", function() {
+			var value = $(this).val().toLowerCase();
+			$("#ma_table tr").filter(function() {
+				$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+			});
+		});
+
+		$('#detallesModal').on('shown.bs.modal', function () {
+
+		});
+	});
+</script> 
+{% endblock javascript %}
+

@@ -1,0 +1,47 @@
+{% extends "base.html"%} {% load bootstrap4 %} {% load static %} 
+{% block css %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+{% endblock css%}
+{% block title %} {{titulo}} una Nomina {% endblock title%} {% block content %}
+<div class="row">
+	<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2">
+		<h1 class="text-center" style="margin-top:30px;">{{titulo}} Nomina</h1>
+		<hr>
+		<form action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="id_match">Match</label>
+				<div class="col-md-9">
+					<select name="match" class="form-control" id="id_match" title="" required="">
+						{% for match in matches %}
+						<option value="{{match.pk}}">{{match.name}}</option>
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="id_players">Players</label>
+				<div class="col-md-9">
+					<select name="players" class="form-control select2 select2-with-search" multiple="multiple" id="id_players" title="" required="">
+						{% for player in players %}
+						<option value="{{player.pk}}">{{player.name}}</option>
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+			
+			<input value="Enviar" class="btn btn-primary btn-lg btn-block" type="submit">
+		</form>
+		<br>
+	</div>
+</div>
+{% endblock content %} {% block javascript %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script>
+	$(document).ready(function () {
+		$(".select2").select2();
+		$("#tc_list").addClass("active");
+		
+		$('.datepicker').datepicker({ format: 'dd/mm/yyyy' });
+		
+	});
+</script> {% endblock javascript %}
